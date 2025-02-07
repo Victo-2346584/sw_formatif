@@ -1,23 +1,16 @@
-import { salutations, ajouterSalutation } from "./salutations.model.js";
+import { getSalutations, ajouterSalutation } from "../models/salutations.model.js";
 
 // Obtenir toutes les salutations
-const getAllSalutations = (req, res) => {
-    res.json(salutations);
+const getAllSalutations =async (req, res) =>  {
+    const sal = await getSalutations()
+    res.json(sal);
+    console.log(sal);
 };
 
 // Obtenir une salutation aléatoire, avec un filtre sur la langue si précisé
-const getRandomSalutation = (req, res) => {
-    const { langue } = req.query;
-    let filteredSalutations = salutations;
-
-    if (langue) {
-        filteredSalutations = salutations.filter(s => s.code_langue === langue);
-        if (filteredSalutations.length === 0) {
-            return res.status(404).json({ message: `Erreur, le code de langue ${langue} n'existe pas` });
-        }
-    }
-
-    const randomSalutation = filteredSalutations[Math.floor(Math.random() * filteredSalutations.length)];
+const getRandomSalutation = async(req, res) => {
+    const sal = await getSalutations();
+    const randomSalutation = sal[Math.floor(Math.random() * sal.length)];
     res.json(randomSalutation);
 };
 

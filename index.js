@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import fs from "fs";
 import path from "path";
-import salutationsRouter from "./salutations.route.js";
+import salutationsRouter from "./src/routes/salutations.route.js";
 
 const app = express();
 const port = 3000;

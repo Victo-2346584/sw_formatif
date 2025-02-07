@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllSalutations, getRandomSalutation, addSalutation } from "./salutations.controller.js";
+import { getAllSalutations, getRandomSalutation, addSalutation } from "../controllers/salutations.controller.js";
 
 const router = express.Router();
 

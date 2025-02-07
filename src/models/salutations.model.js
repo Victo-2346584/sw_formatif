@@ -1,25 +1,35 @@
-const salutations = [
-    { code_langue: "fr", langue: "Français", message: "Bonjour le monde" },
-    { code_langue: "fr", langue: "Français", message: "Bon matin" },
-    { code_langue: "fr", langue: "Français", message: "Salut" },
-    { code_langue: "fr", langue: "Français", message: "Bonne nuit je vais travailler" },
-    { code_langue: "en", langue: "Anglais", message: "Hello world" },
-    { code_langue: "en", langue: "Anglais", message: "Good morning" },
-    { code_langue: "en", langue: "Anglais", message: "Hi" },
-    { code_langue: "en", langue: "Anglais", message: "Good night, I'm going to work" },
-    { code_langue: "es", langue: "Espagnol", message: "Hola Mundo" },
-    { code_langue: "es", langue: "Espagnol", message: "Buenos días" },
-    { code_langue: "es", langue: "Espagnol", message: "Hola" },
-    { code_langue: "es", langue: "Espagnol", message: "Buenas noches me voy a trabajar" },
-    { code_langue: "de", langue: "Allemand", message: "Hallo Welt" },
-    { code_langue: "de", langue: "Allemand", message: "Guten Morgen" },
-    { code_langue: "de", langue: "Allemand", message: "Hallo" },
-    { code_langue: "de", langue: "Allemand", message: "Gute Nacht, ich gehe zur Arbeit" }
-];
+import { error } from 'console';
+import db from '../config/db.js';
+import { resolve } from 'path';
+import { rejects } from 'assert';
 
-// Fonction pour ajouter une salutation
-const ajouterSalutation = (code_langue, langue, message) => {
-    salutations.push({ code_langue, langue, message });
+// Fonction pour récupérer les salutations depuis la base de données
+const getSalutations = async () => {
+    return  new Promise  ((resolve, rejects) =>{
+        db.query('SELECT * FROM salutations',(error, resultat) => {
+            if(error){}
+            else{
+                resolve(resultat);
+            }
+        
+        })
+    });
+    
+     
 };
 
-export { salutations, ajouterSalutation };
+// Fonction pour ajouter une salutation à la base de données
+const ajouterSalutation = async (code_langue, langue, message) => {
+    return  new Promise  ((resolve, rejects) =>{
+        db.query('INSERT INTO salutations (code_langue, langue, message) VALUES (?, ?, ?)', 
+        [code_langue, langue, message],(error, resultat) => {
+            if(error){}
+            else{
+                resolve(resultat);
+            }
+        
+        })
+    });
+};
+
+export { getSalutations, ajouterSalutation };
